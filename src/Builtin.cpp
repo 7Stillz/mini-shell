@@ -56,7 +56,7 @@ void Builtin::help() {
     cout << "║ PIPES:                                                     ║\n";
     cout << "║   cmd1 | cmd2     - Conectar salida de cmd1 a cmd2         ║\n";
     cout << "║                                                            ║\n";
-    cout << "║ EJECUCIÓN EN SEGUNDO PLANO:                                ║\n";
+    cout << "║ EJECUCION EN SEGUNDO PLANO:                                ║\n";
     cout << "║   cmd &           - Ejecutar en background                 ║\n";
     cout << "║                                                            ║\n";
     cout << "║ EJEMPLOS:                                                  ║\n";
@@ -70,7 +70,7 @@ void Builtin::help() {
 
 void Builtin::history(const vector<string>& hist) {
     if (hist.empty()) {
-        cout << "Historial vacío" << endl;
+        cout << "Historial vacio" << endl;
         return;
     }
     
