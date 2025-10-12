@@ -6,9 +6,11 @@
 
 using namespace std;
 
+// Cambia el directorio actual de trabajo
 void Builtin::cd(const vector<string>& args) {
     string targetDir;
     
+    // Si no se indica un directorio, ir al HOME del usuario
     if (args.size() < 2) {
         const char* home = getenv("HOME");
         if (home) {
@@ -18,23 +20,29 @@ void Builtin::cd(const vector<string>& args) {
             return;
         }
     } else {
+        // Si se pasa un argumento, lo usa como destino
         targetDir = args[1];
     }
     
+    // Intentar cambiar de directorio y mostrar error si falla
     if (chdir(targetDir.c_str()) != 0) {
         cerr << "cd: " << strerror(errno) << ": " << targetDir << endl;
     }
 }
 
+// Muestra el directorio de trabajo actual
 void Builtin::pwd() {
     char cwd[1024];
+    // Obtener el path actual con getcwd
     if (getcwd(cwd, sizeof(cwd)) != nullptr) {
         cout << cwd << endl;
     } else {
+        // Si ocurre un error, mostrar descripcion del error
         perror("pwd");
     }
 }
 
+// Muestra la lista de comandos internos y ejemplos de uso
 void Builtin::help() {
     cout << "\n╔════════════════════════════════════════════════════════════╗\n";
     cout << "║              MINI-SHELL - AYUDA                            ║\n";
@@ -68,6 +76,7 @@ void Builtin::help() {
     cout << "╚════════════════════════════════════════════════════════════╝\n\n";
 }
 
+// Muestra el historial de comandos ejecutados
 void Builtin::history(const vector<string>& hist) {
     if (hist.empty()) {
         cout << "Historial vacio" << endl;
