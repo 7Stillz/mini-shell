@@ -15,8 +15,8 @@ private:
     string currentDir;
     
     string getPrompt();
+    void processCommand(const string& line);
     void addToHistory(const string& cmd);
-
 public:
     Shell();
     ~Shell();

@@ -1,4 +1,7 @@
 #include "Shell.h"
+#include "Parser.h"
+#include "Executor.h"
+#include "Builtin.h"
 #include <iostream>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -54,6 +57,66 @@ string Shell::getAlias(const string& name) {
     return "";
 }
 
+void Shell::processCommand(const string& line) {
+    if (line.empty()) return;
+    
+    addToHistory(line);
+    
+    Parser parser(line);
+    Command cmd = parser.parse();
+    
+    if (!cmd.args.empty()) {
+        string aliasValue = getAlias(cmd.args[0]);
+        if (!aliasValue.empty()) {
+            Parser aliasParser(aliasValue);
+            cmd = aliasParser.parse();
+        }
+    }
+    
+    if (!cmd.args.empty()) {
+        string builtinCmd = cmd.args[0];
+        
+        if (builtinCmd == "salir" || builtinCmd == "exit") {
+            running = false;
+            return;
+        }
+        else if (builtinCmd == "cd") {
+            Builtin::cd(cmd.args);
+            return;
+        }
+        else if (builtinCmd == "pwd") {
+            Builtin::pwd();
+            return;
+        }
+        else if (builtinCmd == "help") {
+            Builtin::help();
+            return;
+        }
+        else if (builtinCmd == "history") {
+            Builtin::history(history);
+            return;
+        }
+        else if (builtinCmd == "alias") {
+            if (cmd.args.size() >= 3 && cmd.args[2] == "=") {
+                string name = cmd.args[1];
+                string value = "";
+                for (size_t i = 3; i < cmd.args.size(); i++) {
+                    value += cmd.args[i];
+                    if (i < cmd.args.size() - 1) value += " ";
+                }
+                setAlias(name, value);
+                cout << "Alias creado: " << name << " = " << value << endl;
+            } else {
+                cout << "Uso: alias nombre = comando" << endl;
+            }
+            return;
+        }
+    }
+    
+    Executor executor;
+    executor.execute(cmd);
+}
+
 void Shell::run() {
     char* input;
     
@@ -73,5 +136,11 @@ void Shell::run() {
         }
         
         free(input); // Liberar memoria readline
+	
+	try {
+            processCommand(line);
+        } catch (const exception& e) {
+            cerr << "Error: " << e.what() << endl;
+        }
     }
 }
