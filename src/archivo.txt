@@ -1,0 +1,17 @@
+archivo.txt
+Builtin.cpp
+Builtin.h
+Builtin.o
+Executor.cpp
+Executor.h
+Executor.o
+main.cpp
+main.o
+Makefile
+minishell
+Parser.cpp
+Parser.h
+Parser.o
+Shell.cpp
+Shell.h
+Shell.o

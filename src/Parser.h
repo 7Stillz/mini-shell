@@ -19,9 +19,46 @@ struct Command {
                 pipeCmd(nullptr), background(false) {}
     
     ~Command() {
-        if (pipeCmd) {
+        if (pipeCmd != nullptr) {
             delete pipeCmd;
+	    pipeCmd = nullptr;
         }
+    }
+    
+    Command(const Command& other) 
+        : args(other.args),
+          inputFile(other.inputFile),
+          outputFile(other.outputFile),
+          appendOutput(other.appendOutput),
+          hasPipe(other.hasPipe),
+          pipeCmd(nullptr),
+          background(other.background) {
+        
+        if (other.pipeCmd != nullptr) {
+            pipeCmd = new Command(*other.pipeCmd);
+        }
+    }
+
+    Command& operator=(const Command& other) {
+        if (this != &other) {
+            args = other.args;
+            inputFile = other.inputFile;
+            outputFile = other.outputFile;
+            appendOutput = other.appendOutput;
+            hasPipe = other.hasPipe;
+            background = other.background;
+            
+            if (pipeCmd != nullptr) {
+                delete pipeCmd;
+            }
+            
+            if (other.pipeCmd != nullptr) {
+                pipeCmd = new Command(*other.pipeCmd);
+            } else {
+                pipeCmd = nullptr;
+            }
+        }
+        return *this;
     }
 };
 

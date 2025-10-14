@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include <iostream>
 #include <sstream>
 #include <algorithm>
 
@@ -94,11 +95,13 @@ Command Parser::parse() {
     if (pipePos != tokens.end()) {
         vector<string> leftTokens(tokens.begin(), pipePos);
         vector<string> rightTokens(pipePos + 1, tokens.end());
-        
+	        
         // Crea el comando izquierdo y conecta el derecho mediante un puntero
         Command cmd = parseSimple(leftTokens);
         cmd.hasPipe = true;
-        cmd.pipeCmd = new Command(parseSimple(rightTokens));
+        
+	cmd.pipeCmd = new Command();
+	*cmd.pipeCmd = parseSimple(rightTokens);
         
         return cmd;
     }
