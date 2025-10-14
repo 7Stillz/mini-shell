@@ -1,7 +1,9 @@
 # mini-shell
+## Descripción del Proyecto
 Mini-Shell en C++ para Sistemas Operativos
 Este proyecto es una implementación de un intérprete de comandos (mini-shell) para sistemas Linux, desarrollado en C++ como parte de la asignatura de Sistemas Operativos de la UNJBG. El programa es capaz de ejecutar comandos externos, manejar redirecciones de E/S, tuberías (pipes), ejecución en segundo plano y comandos internos (built-ins).
 
+## Requerimientos
 Requerimientos
 Para compilar y ejecutar este proyecto, necesitas tener instalado lo siguiente en un entorno Linux:
 
@@ -15,6 +17,7 @@ Para instalar en Debian/Ubuntu: sudo apt-get install libreadline-dev
 
 Para instalar en Fedora/CentOS: sudo dnf install readline-devel
 
+## Instrucciones de Compilación y Ejecución
 Instrucciones de Compilación y Ejecución
 Clonar el repositorio:
 
@@ -41,6 +44,7 @@ Bash
 
 make clean
 
+## Funcionalidades Implementadas
 Tabla de Características Implementadas
 El proyecto cumple con todas las especificaciones base y añade varias extensiones de valor agregado, superando el mínimo requerido de dos.
 
@@ -67,6 +71,7 @@ Redirige la salida estándar de un comando a un archivo, creándolo o truncándo
 Comando de Salida
 La shell termina de forma segura al ingresar salir o exit. 
 
+## Extensiones de valor agregado
 --- Extensiones de Valor Agregado ---		
 **Pipes (`	`)**
 Tareas en Segundo Plano (&)	
@@ -84,6 +89,7 @@ Incluye cd, pwd, help, history y alias para gestionar la shell sin crear nuevos 
 Manejo de Señales (SIGINT)
 Captura la señal Ctrl+C para evitar que la shell se cierre accidentalmente, mostrando una nueva línea de prompt en su lugar
 
+## Casos de Prueba y Ejemplos de Uso
 Casos de Prueba y Ejemplos de Uso
 A continuación se muestran algunos ejemplos de cómo interactuar con la mini-shell.
 
