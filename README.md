@@ -1,95 +1,131 @@
-# mini-shell
-## Descripción del Proyecto
-Mini-Shell en C++ para Sistemas Operativos
-Este proyecto es una implementación de un intérprete de comandos (mini-shell) para sistemas Linux, desarrollado en C++ como parte de la asignatura de Sistemas Operativos de la UNJBG. El programa es capaz de ejecutar comandos externos, manejar redirecciones de E/S, tuberías (pipes), ejecución en segundo plano y comandos internos (built-ins).
+# 🐚 Mini-Shell en C++
 
-## Requerimientos
-Requerimientos
-Para compilar y ejecutar este proyecto, necesitas tener instalado lo siguiente en un entorno Linux:
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
+![Linux](https://img.shields.io/badge/OS-Linux-success.svg)
+![Status](https://img.shields.io/badge/Estado-En%20Desarrollo-orange)
+![License](https://img.shields.io/badge/Licencia-Acad%C3%A9mica-lightgrey)
 
-Compilador G++: Que soporte el estándar C++17.
+---
 
-GNU Make: Para automatizar el proceso de compilación.
+## 📘 Descripción del Proyecto
 
-Biblioteca Readline: Para una mejor experiencia en la línea de comandos (historial con flechas, etc.).
+**Mini-Shell** es un intérprete de comandos desarrollado en **C++** para sistemas **Linux**, como parte del curso de **Sistemas Operativos** en la **Universidad Nacional Jorge Basadre Grohmann (UNJBG)**.  
 
-Para instalar en Debian/Ubuntu: sudo apt-get install libreadline-dev
+El objetivo del proyecto es implementar un entorno similar a **Bash**, capaz de ejecutar **comandos externos**, manejar **redirecciones de entrada/salida**, **pipes**, **procesos en segundo plano** y **comandos internos (built-ins)**.
 
-Para instalar en Fedora/CentOS: sudo dnf install readline-devel
+---
 
-## Instrucciones de Compilación y Ejecución
-Instrucciones de Compilación y Ejecución
-Clonar el repositorio:
+## ⚙️ Requerimientos
 
-Bash
+Para compilar y ejecutar el proyecto, asegúrate de tener instalado en tu entorno Linux:
 
-git clone <URL-DE-TU-REPOSITORIO>
+- 🧩 **G++** (compatible con estándar **C++17** o superior)  
+- ⚙️ **GNU Make** (para la automatización de la compilación)  
+- 📜 **Biblioteca Readline** (para soporte de historial y edición interactiva en la línea de comandos)
+
+### 📦 Instalación de dependencias
+
+**Debian / Ubuntu:**
+```bash
+sudo apt-get install libreadline-dev
+```
+
+**Fedora / CentOS:**
+```bash
+sudo dnf install readline-devel
+```
+
+---
+
+## 🧱 Compilación y Ejecución
+
+### 🌀 1. Clonar el repositorio
+```bash
+git clone <URL-DEL-REPOSITORIO>
 cd <nombre-del-directorio>
-Compilar el proyecto:
-Usa el comando make para compilar todos los archivos fuente. 
+```
 
-Bash
-
+### 🛠️ 2. Compilar el proyecto
+```bash
 make
-Ejecutar la Mini-Shell:
-Una vez compilado, puedes iniciar el intérprete con el siguiente comando: 
+```
 
-Bash
-
+### ▶️ 3. Ejecutar la Mini-Shell
+```bash
 ./minishell
-Limpiar los archivos generados:
-Para eliminar los archivos objeto (.o) y el ejecutable, usa:
+```
 
-Bash
-
+### 🧹 4. Limpiar archivos generados
+```bash
 make clean
+```
 
-## Funcionalidades Implementadas
-Tabla de Características Implementadas
-El proyecto cumple con todas las especificaciones base y añade varias extensiones de valor agregado, superando el mínimo requerido de dos.
+---
 
-Característica	Estado	Descripción
---- Funcionalidades Base ---		
-Prompt Personalizado
-Muestra el nombre del directorio actual en color para una mejor visualización. 
+## 🚀 Funcionalidades Implementadas
 
-Resolución de Rutas
-Ejecuta comandos con rutas absolutas (/bin/ls) y busca en /bin y /usr/bin para rutas relativas (ls). 
+| 💡 **Funcionalidad Base** | 🧾 **Descripción** |
+|----------------------------|--------------------|
+| 🖥️ **Prompt Personalizado** | Muestra el nombre del directorio actual en color para mejor visualización. |
+| 📂 **Resolución de Rutas** | Soporta rutas absolutas (`/bin/ls`) y busca en `/bin` y `/usr/bin` para rutas relativas. |
+| ⚙️ **Ejecución con fork/exec** | Los comandos externos se ejecutan en procesos hijos mediante `fork()` y `execvp()`. |
+| ⏳ **Sincronización con waitpid()** | Espera la finalización de procesos en primer plano antes de mostrar el siguiente prompt. |
+| ❌ **Manejo de Errores** | Informa claramente al usuario mediante `perror()` o `strerror()`. |
+| 📤 **Redirección de Salida (`>`)** | Envía la salida de un comando a un archivo (crea o sobrescribe). |
+| 🔚 **Comando de Salida** | Termina la shell con `exit` o `salir`. |
 
-Ejecución con fork/exec
-Cada comando externo se ejecuta en un proceso hijo, creado con fork() y reemplazado con execvp(). 
+---
 
-Espera del Padre (waitpid)
-La shell espera a que los comandos en primer plano terminen antes de mostrar el siguiente prompt. 
+## 💎 Extensiones de Valor Agregado
 
-Manejo de Errores
-Informa al usuario si un comando no se encuentra o si una llamada al sistema falla, usando perror o strerror. 
+| ✨ **Extensión** | 🧾 **Descripción** |
+|------------------|--------------------|
+| 🔗 **Pipes (`|`)** | Permite encadenar comandos conectando la salida de uno con la entrada de otro. |
+| 🧠 **Ejecución en Segundo Plano (`&`)** | Ejecuta procesos sin bloquear la shell, mostrando el PID del proceso creado. |
+| 📥 **Redirección de Entrada (`<`)** | Toma la entrada desde un archivo en lugar del teclado. |
+| 📑 **Doble Redirección (`>>`)** | Añade la salida al final de un archivo sin sobrescribirlo. |
+| ⚡ **Comandos Internos (Built-ins)** | Incluye `cd`, `pwd`, `help`, `history` y `alias`. |
+| 🛡️ **Manejo de Señales (SIGINT)** | Captura `Ctrl + C` para evitar el cierre accidental de la shell. |
 
-Redirección de Salida (>)
-Redirige la salida estándar de un comando a un archivo, creándolo o truncándolo si ya existe. 
+---
 
-Comando de Salida
-La shell termina de forma segura al ingresar salir o exit. 
+## 🧪 Casos de Prueba y Ejemplos de Uso
 
-## Extensiones de valor agregado
---- Extensiones de Valor Agregado ---		
-**Pipes (`	`)**
-Tareas en Segundo Plano (&)	
-Permite ejecutar comandos en background sin bloquear el prompt, mostrando el PID del nuevo proceso. 
+### 📄 Comandos básicos
+```bash
+ls -l
+pwd
+cd ..
+```
 
-Redirección de Entrada (<)
-Redirige el contenido de un archivo a la entrada estándar de un comando. 
+### 🔁 Redirección y pipes
+```bash
+ls > archivos.txt
+cat archivos.txt | grep .cpp
+```
 
-Doble Red. de Salida (>>)
-Redirige la salida estándar a un archivo, pero añadiéndola al final (append) en lugar de sobrescribir. 
+### 🧩 Ejecución en segundo plano
+```bash
+./programa &
+```
 
-Comandos Internos (Built-ins)
-Incluye cd, pwd, help, history y alias para gestionar la shell sin crear nuevos procesos. 
+### ⚙️ Comandos internos
+```bash
+cd /home/usuario
+alias ll='ls -l'
+history
+help
+```
 
-Manejo de Señales (SIGINT)
-Captura la señal Ctrl+C para evitar que la shell se cierre accidentalmente, mostrando una nueva línea de prompt en su lugar
+---
 
-## Casos de Prueba y Ejemplos de Uso
-Casos de Prueba y Ejemplos de Uso
-A continuación se muestran algunos ejemplos de cómo interactuar con la mini-shell.
+## 🧑‍💻 Autores
+
+Desarrollado por estudiantes de **Ingeniería de Sistemas**  
+**Universidad Nacional Jorge Basadre Grohmann (UNJBG)**  
+📘 Curso: **Sistemas Operativos**
+
+
+
+
 
